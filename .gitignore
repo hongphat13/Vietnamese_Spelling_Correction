@@ -1,0 +1,12 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VS Code / venv
+.vscode/
+.venv/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
