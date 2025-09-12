@@ -53,81 +53,47 @@ Dự án xây dựng hệ thống **sửa lỗi chính tả tiếng Việt** d�
 - **Serving/Demo:** FastAPI \+ Uvicorn (REST API, OpenAPI/Swagger), Gradio (UI demo).
 
 ## **📂 Cấu trúc thư mục**
-
-`├─ artifacts/                  # Artifacts phục vụ suy luận`
-
-`│  ├─ vocab.json               # Từ vựng tiếng Việt`
-
-`│  ├─ ngrams.pkl               # Thống kê n-gram (trigram)`
-
-`│  ├─ transition_prob.pkl      # P(w_t | w_{t-1}, w_{t-2})`
-
-`│  ├─ context_totals.pkl       # Tổng đếm/normalization (cho smoothing)`
-
-`│  └─ config.json              # Tham số decode (vd: alpha/emission weight)`
-
-`│`
-
-`├─ dataset/`
-
-`│  ├─ test.csv                 # Tập kiểm thử`
-
-`│  ├─ unique_correct_texts.csv # Nguồn câu/từ chuẩn để sinh lỗi`
-
-`│  └─ NguLieuPhanTich.xlsx     # Phân tích 1 vài ngữ liệu`
-
-`│  # Chú ý: file train.csv (Tạo sinh dữ liệu train)`
-
-`│`
-
-`├─ data_stats/                 # Thống kê dữ liệu (EDA)`
-
-`│  ├─ test_dataset_stats.ipynb`
-
-`│  └─ train_dataset_stats.ipynb`
-
-`│`
-
-`├─ preprocessing/`
-
-`│  └─ Data-Preprocessing.ipynb # Chuẩn hoá Unicode, tokenize, trie/grouping`
-
-`│`
-
-`├─ training/                   # Notebook huấn luyện & biến thể mô hình`
-
-`│  ├─ hmm-trigram-laplace-*.ipynb`
-
-`│  ├─ hmm-trigram-kneser-ney-smoothing.ipynb`
-
-`│  ├─ hmm-trigram-boosted-emission-probabilities.ipynb`
-
-`│  ├─ hmm-trigram-reordered-context.ipynb`
-
-`│  ├─ seq2seq_with_attention.ipynb`
-
-`│  └─ bartpho-syllable-finetuning.ipynb`
-
-`│`
-
-`├─ src/`
-
-`│  ├─ hmm_decoder.py           # HMMSpellChecker + Viterbi + load artifacts`
-
-`│  └─ diff.py                  # Highlight khác biệt trước/sau`
-
-`│`
-
-`├─ api.py                      # FastAPI: POST /correct  (OpenAPI tại /docs)`
-
-`├─ app.py                      # Gradio demo UI`
-
-`├─ errors-generator.ipynb      # Sinh lỗi → tạo train.csv (~5M câu)`
-
-`├─ requirements.txt`
-
-`└─ README.md`
-
+Dưới đây là cấu trúc thư mục chính của dự án, giúp bạn dễ dàng điều hướng và hiểu rõ các thành phần:
+```bash
+Vietnamese_Spelling_Correction/
+├── artifacts/                      # Artifacts phục vụ suy luận
+│   ├── vocab.json                  # Từ vựng tiếng Việt
+│   ├── ngrams.pkl                  # Thống kê n-gram (trigram)
+│   ├── transition_prob.pkl         # Xác suất chuyển P(w_t | w_{t-1}, w_{t-2})
+│   ├── context_totals.pkl          # Tổng đếm/chuẩn hoá (cho smoothing)
+│   └── config.json                 # Tham số decode (ví dụ: alpha/emission_weight)
+│
+├── dataset/                        # Dữ liệu huấn luyện/đánh giá
+│   ├── test.csv                    # Tập kiểm thử
+│   ├── unique_correct_texts.csv    # Nguồn câu/từ chuẩn để sinh lỗi
+│   └── NguLieuPhanTich.xlsx        # Phân tích một số ngữ liệu
+│   # Ghi chú: train.csv được tạo bằng script sinh lỗi (errors-generator.ipynb)
+│
+├── data_stats/                     # Thống kê dữ liệu (EDA)
+│   ├── test_dataset_stats.ipynb
+│   └── train_dataset_stats.ipynb
+│
+├── preprocessing/                  # Tiền xử lý dữ liệu
+│   └── Data-Preprocessing.ipynb    # Chuẩn hoá Unicode, tokenize, trie/grouping
+│
+├── training/                       # Huấn luyện & các biến thể mô hình
+│   ├── hmm-trigram-laplace-*.ipynb
+│   ├── hmm-trigram-kneser-ney-smoothing.ipynb
+│   ├── hmm-trigram-boosted-emission-probabilities.ipynb
+│   ├── hmm-trigram-reordered-context.ipynb
+│   ├── seq2seq_with_attention.ipynb
+│   └── bartpho-syllable-finetuning.ipynb
+│
+├── src/                            # Mã nguồn chính
+│   ├── hmm_decoder.py              # HMMSpellChecker + Viterbi + load artifacts
+│   └── diff.py                     # Highlight khác biệt trước/sau
+│
+├── api.py                          # FastAPI: POST /correct (OpenAPI tại /docs)
+├── app.py                          # Gradio demo UI
+├── errors-generator.ipynb          # Sinh lỗi → tạo train.csv (~5M câu)
+├── requirements.txt                # Thư viện Python cần thiết
+└── README.md                       # Tài liệu dự án
+```
 ---
 
 ## **🔬 Quy trình huấn luyện & tái tạo**
