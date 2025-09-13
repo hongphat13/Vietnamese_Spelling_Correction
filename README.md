@@ -7,9 +7,9 @@
 
 ---
 
-# **VIETNAMESE SPELLING CORRECTION**
+# <p align="center">**VIETNAMESE SPELLING CORRECTION**</p>
 
-## **CS221 — NATURAL LANGUAGE PROCESSING**
+## <p align="center">**CS221 — NATURAL LANGUAGE PROCESSING**</p>
 
 ---
 
